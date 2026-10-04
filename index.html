@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Just Beba ❤️</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Childhood photo collage fix -->
+  <style>
+    .childhood-page {
+      overflow-x: hidden;
+      padding: 30px 12px;
+    }
+
+    .memory-collage {
+      position: relative;
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px 24px;
+      width: min(1100px, 96%);
+      min-height: 0 !important;
+      height: auto !important;
+      margin: 30px auto;
+      padding: 15px 10px 100px;
+      box-sizing: border-box;
+      align-items: start;
+    }
+
+    .memory-collage .polaroid {
+      position: relative !important;
+      inset: auto !important;
+      width: 100% !important;
+      max-width: 250px;
+      min-width: 0;
+      height: auto !important;
+      margin: 0 auto;
+      padding: 12px 12px 18px;
+      box-sizing: border-box;
+      transform: rotate(-2deg);
+      animation: none !important;
+      z-index: 2;
+    }
+
+    .memory-collage .polaroid:nth-of-type(even) {
+      transform: rotate(2deg);
+    }
+
+    .memory-collage .photo-wrap {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+    }
+
+    .memory-collage .photo-wrap img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .memory-collage .polaroid p {
+      margin: 12px 2px 0;
+      overflow-wrap: anywhere;
+      text-align: center;
+    }
+
+    .memory-collage .decoration {
+      position: absolute !important;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .memory-collage .flower1 {
+      top: 5px !important;
+      left: 5px !important;
+    }
+
+    .memory-collage .flower2 {
+      top: 10px !important;
+      right: 5px !important;
+    }
+
+    .memory-collage .flower3 {
+      bottom: 50px !important;
+      left: 5px !important;
+    }
+
+    .memory-collage .ribbon1 {
+      bottom: 50px !important;
+      right: 10px !important;
+    }
+
+    .memory-collage .love-note {
+      bottom: 15px !important;
+      left: 50% !important;
+      transform: translateX(-50%);
+    }
+
+    .memory-collage .big-heart {
+      bottom: 35px !important;
+      right: 12% !important;
+    }
+
+    /* Dreamy bottle page */
+    #bottle-page.dreamy-bottle-page {
+      display: none;
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100svh;
+      padding: 80px 20px 50px;
+      overflow: hidden;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 18px;
+      text-align: center;
+      color: #fff4ff;
+      background:
+        radial-gradient(ellipse at top, #603d83 0%, transparent 55%),
+        linear-gradient(160deg, #321849, #1b1035 75%);
+    }
+
+    #bottle-page.dreamy-bottle-page.active {
+      display: flex !important;
+    }
+
+    .dreamy-bottle-page .back-btn {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 5;
+    }
+
+    .dreamy-bottle-page .dreamy-stars {
+      font-size: 24px;
+      letter-spacing: 5px;
+      margin: 5px 0;
+      animation: dreamyGlow 3s ease-in-out infinite alternate;
+    }
+
+    .dreamy-bottle-page h1 {
+      max-width: 850px;
+      margin: 0;
+      color: #ffe1f0;
+      font-family: Georgia, serif;
+      font-size: clamp(27px, 5vw, 44px);
+      line-height: 1.25;
+      text-shadow: 0 0 20px #ff9bc8;
+    }
+
+    .dreamy-bottle-page .bottle-subtitle {
+      max-width: 600px;
+      margin: 0 auto;
+      color: #f8dff5;
+      line-height: 1.7;
+    }
+
+    .dreamy-bottle-page .bottle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: min(260px, 85vw);
+      min-height: 180px;
+      margin: 10px auto;
+      padding: 22px;
+      border: 1px solid #ffd9ee;
+      border-radius: 28px;
+      color: #fff;
+      background: linear-gradient(145deg, #a66bd1, #5b337f);
+      box-shadow: 0 0 30px #d88aff55;
+      cursor: pointer;
+      font-size: 15px;
+      animation: bottleFloat 3s ease-in-out infinite;
+    }
+
+    .dreamy-bottle-page .bottle-emoji {
+      display: block;
+      font-size: 76px;
+    }
+
+    .dreamy-bottle-page .bottle:hover {
+      transform: scale(1.04);
+    }
+
+    .dreamy-bottle-page .love-letter {
+      display: none;
+      width: min(650px, 100%);
+      box-sizing: border-box;
+      margin: 15px auto;
+      padding: clamp(20px, 5vw, 38px);
+      border: 1px solid #f4c7df;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #fff4f8, #ffe4ef);
+      color: #632d4c;
+      text-align: left;
+      line-height: 1.8;
+      box-shadow: 0 15px 45px #0003;
+      animation: letterAppear 0.7s ease both;
+    }
+
+    .dreamy-bottle-page .love-letter.show {
+      display: block;
+    }
+
+    .dreamy-bottle-page .love-letter h2 {
+      margin: 0 0 18px;
+      color: #a22c68;
+      font-family: Georgia, serif;
+      text-align: center;
+    }
+
+    .dreamy-bottle-page .love-letter p {
+      margin: 14px 0;
+    }
+
+    .dreamy-bottle-page .letter-signature {
+      color: #a22c68;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    #show-bottle-memories {
+      display: block;
+      max-width: 100%;
+      margin: 25px auto 0;
+      padding: 13px 22px;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      background: linear-gradient(135deg, #bc5595, #8847b9);
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #bottle-memories {
+      width: min(900px, 100%);
+      margin: 15px auto 0;
+      animation: letterAppear 0.7s ease both;
+    }
+
+    #bottle-memories[hidden] {
+      display: none !important;
+    }
+
+    #bottle-memories h2 {
+      color: #ffe1f0;
+      font-family: Georgia, serif;
+    }
+
+    #bottle-memories > p {
+      line-height: 1.7;
+    }
+
+    .bottle-memory-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 22px auto;
+    }
+
+    .bottle-memory-grid img {
+      display: block;
+      width: 100%;
+      height: 260px;
+      box-sizing: border-box;
+      object-fit: cover;
+      border: 7px solid #fff1f7;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px #0003;
+      transform: rotate(-1deg);
+    }
+
+    .bottle-memory-grid img:nth-child(even) {
+      transform: rotate(1deg);
+    }
+
+    .dreamy-bottle-page .memory-ending {
+      margin: 25px auto;
+      color: #ffd6eb;
+      font-size: 18px;
+      font-family: Georgia, serif;
+    }
+
+    @keyframes bottleFloat {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-9px) rotate(2deg); }
+    }
+
+    @keyframes dreamyGlow {
+      from { opacity: 0.65; }
+      to { opacity: 1; text-shadow: 0 0 18px #ffb8e2; }
+    }
+
+    @keyframes letterAppear {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 800px) {
+      .memory-collage {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px 16px;
+        width: 100%;
+        padding: 15px 8px 80px;
+      }
+
+      .memory-collage .photo-wrap {
+        height: 220px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .childhood-page {
+        padding: 20px 8px;
+      }
+
+      .memory-collage {
+        gap: 20px 10px;
+      }
+
+      .memory-collage .polaroid {
+        padding: 7px 7px 12px;
+      }
+
+      .memory-collage .photo-wrap {
+        height: 155px;
+      }
+
+      .memory-collage .polaroid p {
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      #bottle-page.dreamy-bottle-page {
+        padding: 75px 12px 35px;
+      }
+
+      .bottle-memory-grid {
+        gap: 10px;
+      }
+
+      .bottle-memory-grid img {
+        height: 170px;
+        border-width: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="floating-hearts"></div>
+
+  <!-- PAGE 1: PASSWORD -->
+  <section id="page1" class="page active">
+    <div class="password-layout">
+      <div class="photo-frame">
+        <img src="images/beba cover.jpg" alt="My world, my man.">
+        <p>My favorite birthday boy ♡</p>
+      </div>
+
+      <div class="password-box">
+        <h2>Just for you ❤️</h2>
+        <p>Enter your secret passcode</p>
+
+        <div class="pass-display">
+          <span class="digit"></span>
+          <span class="digit"></span>
+          <span class="digit"></span>
+          <span class="digit"></span>
+        </div>
+
+        <div class="keypad">
+          <button data-num="1">1</button>
+          <button data-num="2">2</button>
+          <button data-num="3">3</button>
+          <button data-num="4">4</button>
+          <button data-num="5">5</button>
+          <button data-num="6">6</button>
+          <button data-num="7">7</button>
+          <button data-num="8">8</button>
+          <button data-num="9">9</button>
+          <button data-num="clear">✕</button>
+          <button data-num="0">0</button>
+          <button data-num="delete">⌫</button>
+        </div>
+
+        <p id="password-message">Hint: It's our special date 💕</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 2: CONGRATULATIONS -->
+  <section id="page2" class="page">
+    <h1 class="congrats-title">CONGRATULATIONS!</h1>
+
+    <div class="congrats-content">
+      <div class="couple-photo">
+        <img src="images/car ramzan.jpg" alt="Birthday boy">
+      </div>
+
+      <div class="congrats-text">
+        <h2>You did it, Beba! 🎉</h2>
+        <p>Your little birthday surprise is waiting...</p>
+      </div>
+    </div>
+
+    <div class="cat-area">
+      <button id="cat-button" aria-label="Click the cute cat">
+        <span class="cat">🐱</span>
+        <span class="cat-caption">Click me!</span>
+      </button>
+    </div>
+
+    <p class="hint">Psst... the cat has a surprise for you!</p>
+  </section>
+
+  <!-- PAGE 3: GIFT -->
+  <section id="page3" class="page">
+    <h1 class="gift-title">Happy birthday, love!</h1>
+    <p class="gift-subtitle">Do you wanna open your gift? 💗</p>
+
+    <button id="gift-button" aria-label="Open birthday gift">
+      <span class="gift-emoji">🎁</span>
+    </button>
+
+    <p class="gift-hint">Tap the gift box!</p>
+
+    <div class="choice-buttons">
+      <button id="yes-button" class="yes-btn">✔ YES</button>
+      <button id="no-button" class="no-btn">✖ NO</button>
+    </div>
+
+    <p id="gift-message"></p>
+  </section>
+
+  <!-- PAGE 4: BIRTHDAY CAKE -->
+  <section id="page4" class="page">
+    <h1 class="cake-title">Happy Birthday<br>My Love! ❤️</h1>
+    <p class="cake-subtitle">Make a wish, Beba!</p>
+    <div class="cake-decoration">✨ 💗 ✨ 💕 ✨</div>
+
+    <div class="cake-scene">
+      <div class="cake">
+        <div class="candles">
+          <button class="candle" aria-label="Blow out candle"><span class="flame">🔥</span></button>
+          <button class="candle" aria-label="Blow out candle"><span class="flame">🔥</span></button>
+          <button class="candle" aria-label="Blow out candle"><span class="flame">🔥</span></button>
+          <button class="candle" aria-label="Blow out candle"><span class="flame">🔥</span></button>
+          <button class="candle" aria-label="Blow out candle"><span class="flame">🔥</span></button>
+        </div>
+
+        <div class="cake-top"></div>
+        <div class="cake-layer layer-one"></div>
+        <div class="cake-layer layer-two"></div>
+        <div class="cake-plate"></div>
+      </div>
+    </div>
+
+    <p id="candle-message">Click the flames to blow out the candles! 🕯️</p>
+
+    <div class="birthday-photos">
+      <img src="images/°•○●.jpg" alt="Birthday memory">
+      <img src="images/aesthetic nobita.jpg" alt="Birthday memory">
+      <img src="images/download (1).jpg" alt="Birthday memory">
+    </div>
+
+    <button id="next-button" class="main-btn" disabled>NEXT ➜</button>
+  </section>
+
+  <!-- PAGE 5: SURPRISE OPTIONS -->
+  <section id="page5" class="page">
+    <h1 class="surprise-title">These are for you! 💝</h1>
+    <p class="surprise-subtitle">Choose one to open</p>
+
+    <div class="surprise-options">
+      <button class="surprise-card" data-surprise="camera">
+        <span>📸</span><b>Camera</b>
+      </button>
+
+      <button class="surprise-card" data-surprise="bottle">
+        <span>🍾</span><b>Bottle</b>
+      </button>
+
+      <button class="surprise-card" data-surprise="star">
+        <span>⭐</span><b>Star</b>
+      </button>
+    </div>
+  </section>
+
+  <!-- CHILDHOOD MEMORIES -->
+  <section id="camera-page" class="page surprise-page childhood-page">
+    <button class="back-btn">← Back</button>
+
+    <h1>Childhood Memories 🤍</h1>
+    <p class="childhood-subtitle">
+      Little moments, big memories with his favorite people. 🫶
+    </p>
+
+    <div class="memory-collage">
+
+      <div class="polaroid photo1">
+        <div class="photo-wrap">
+          <img src="images/childhood3.jpg" alt="Childhood memory">
+          <span class="heart">♡</span>
+        </div>
+        <p>The woman who loved him before the whole world knew him. 🤍</p>
+      </div>
+
+      <div class="polaroid photo2">
+        <div class="photo-wrap">
+          <img src="images/didi.jpg" alt="Brother and sister">
+          <span class="heart">♡</span>
+        </div>
+        <p>A brother, a sister, and a lifetime of love. ❤️</p>
+      </div>
+
+      <div class="polaroid photo3">
+        <div class="photo-wrap">
+          <img src="images/childhood1.jpg" alt="School memory">
+          <span class="heart">♡</span>
+        </div>
+        <p>Our handsome little 10th standard boy. 🥹❤️</p>
+      </div>
+
+      <div class="polaroid photo4">
+        <div class="photo-wrap">
+          <img src="images/childhood2.jpg" alt="Childhood memory">
+          <span class="heart">♡</span>
+        </div>
+        <p>A little piece of his childhood. 💗</p>
+      </div>
+
+      <div class="polaroid photo5">
+        <div class="photo-wrap">
+          <img src="images/cousins.jpg" alt="Memory with cousins">
+          <span class="heart">♡</span>
+        </div>
+        <p>Growing up together, making memories forever. ❤️</p>
+      </div>
+
+      <div class="polaroid photo6">
+        <div class="photo-wrap">
+          <img src="images/clg didi.jpg" alt="College memory with sister">
+          <span class="heart">♡</span>
+        </div>
+        <p>Little moments, endless memories. 🫶</p>
+      </div>
+
+      <div class="polaroid photo7">
+        <div class="photo-wrap">
+          <img src="images/selfie1.jpg" alt="Calm face, wild mind">
+          <span class="heart">♡</span>
+        </div>
+        <p>Calm face, wild mind. 🖤</p>
+      </div>
+
+      <div class="polaroid photo8">
+        <div class="photo-wrap">
+          <img src="images/selfi2.jpg" alt="Simple guy, different vibe">
+          <span class="heart">♡</span>
+        </div>
+        <p>Simple guy, different vibe. ✨</p>
+      </div>
+
+      <div class="polaroid photo9">
+        <div class="photo-wrap">
+          <img src="images/with baby.jpg" alt="A sweet memory">
+          <span class="heart">♡</span>
+        </div>
+        <p>Strong arms, soft heart. ❤️‍🩹</p>
+      </div>
+
+      <div class="decoration flower flower1">🌸</div>
+      <div class="decoration flower flower2">🌷</div>
+      <div class="decoration flower flower3">🌻</div>
+      <div class="decoration ribbon1">🎀</div>
+      <div class="decoration big-heart">♡</div>
+
+    </div>
+  </section>
+
+  <!-- BOTTLE SURPRISE -->
+  <section id="bottle-page" class="page surprise-page dreamy-bottle-page">
+
+    <button class="back-btn">← Back</button>
+
+    <div class="dreamy-stars">✨　🌙　♡　✨　⭐</div>
+
+    <h1>A Little Bottle Full of Love 💌</h1>
+
+    <p class="bottle-subtitle">
+      A tiny surprise filled with all my love, just for you, Beba. ❤️
+    </p>
+
+    <button id="bottle-button" class="bottle" type="button">
+      <span class="bottle-emoji">🍾</span>
+      <span>Tap to open your love letter 💗</span>
+    </button>
+
+    <div id="love-letter" class="love-letter">
+
+      <h2>To my Beba, my favourite person ❤️</h2>
+
+      <p>
+        To My Man,
+
+Mujhe sach mein ni mlm jii mein tumhna kya bolu bolku....
+Pehle baat toh ye hai ki wish uh a very happy bday to the world's best man in the world...
+Tumne meri aadat ban gye ho... Subah subah mein utte ich i need my uh at any cost....
+tumhe meri adaat ban gye jii...aur ek baat tumhe meri haad ho!!!</p>
+<p>
+mujhe tumhari zarurat ho, har pal har sec mein mujhe tumhari zarurat haii....
+“Wo bolte na ji, meri aaduri zindagi mein roshani dena wala chand ho tum!!</p>
+<p> 
+Tumhe mere mood changer ji... agar mein roon toh
+bhi tumhe mujhe haste aagar mein gusse mein hu toh bhi
+hasate... Hume kitta ladte ji dushman se bhi zyada
+ladte jitta humne par pyaar usse bhi zyada karte ji ek dusre ke liye aur jaan bhi hazair haii ek dusre ke liye...
+</p>
+<p></p> Tumhe meri life mein aaku.
+Mujhe sabse khushnaseeb ladki banaye ji... 
+Jo tumhe mujhe izzat dete, pyaar karte, aur mujhe tumhara
+Gyaan baatne ke liye thank you so much meri jaan...</p><p>
+Waise toh mujhe jealousy ya trust issues nahi hai par
+par mere mood pe depend dekho ba yeh mein bol ni sakhti waisa bhi tumhe mujhe bulate ich na shaqukani aurat bolku...</p>
+<p>Tumhe mere mood swings ko bhi kya mast jhelte ji...
+Hume long distance mein 1 saal se hai ji... Dusre
+jaane hai toh kitna shaq karte tumhe mere pe 1 time pe
+bhi shaq ni kare... The way uh ask my hand for
+holding that's where I fell love with you still harder &
+harder... kaisa toh kar ku mere sambhalo ji...</p>
+      </p>
+
+      <p class="letter-signature">Forever your Arshu ❤️🫶</p>
+
+      <button id="show-bottle-memories" type="button">
+        Open our little memories 📸
+      </button>
+
+    </div>
+
+    <div id="bottle-memories" hidden>
+
+      <h2>Little Moments, Big Love 💖</h2>
+      <p>Every memory with you is a little treasure.</p>
+
+      <div class="bottle-memory-grid">
+        <img src="images/us1.jpg" alt="Our special memory">
+        <img src="images/us2.jpg" alt="A favourite memory">
+        <img src="images/us4.jpg" alt="Our 1st pic">
+        <img src="images/download (1).jpg" alt="Our fav Disney">
+      </div>
+
+      <p class="memory-ending">
+        My favourite memories are the ones that have you in them. ❤️
+      </p>
+
+    </div>
+
+  </section>
+
+ ```html
+```html
+<!-- PERSONAL BIRTHDAY VIDEO -->
+<section id="star-page" class="page surprise-page birthday-video-page">
+
+  <button class="back-btn">← Back</button>
+
+  <div class="video-stars">✨ 💗 ⭐ 💗 ✨</div>
+
+  <h1>Something Special for You, Beba ❤️</h1>
+
+  <p class="video-intro">
+    Every second of this video is a little reminder of how special you are to me.
+  </p>
+
+  <div class="birthday-video-frame">
+    <video id="funny-video"
+           controls
+           playsinline
+           preload="metadata"
+           poster="images/beba.jpg">
+      <source src="videos/short.mp4" type="video/mp4">
+      Your browser cannot play this video.
+    </video>
+  </div>
+
+  <p class="video-caption">
+    My favourite person. My favourite memories. My favourite love. 💌
+  </p>
+
+  <p class="video-ending">
+    Happy Birthday, my Beba! ❤️<br>
+    If I could choose again, I'd still choose you in every life time</time> 🫶
+  </p>
+  <p>This is exactly uh my love of my life ❤️</p>
+
+</section>
+
+
+
+  <div id="confetti-container"></div>
+
+  <script src="script.js"></script>
+
+  <!-- Bottle interactions -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const bottleButton = document.getElementById("bottle-button");
+      const loveLetter = document.getElementById("love-letter");
+      const memoriesButton = document.getElementById("show-bottle-memories");
+      const memories = document.getElementById("bottle-memories");
+
+      if (bottleButton && loveLetter) {
+        bottleButton.addEventListener("click", function () {
+          loveLetter.classList.add("show");
+          bottleButton.querySelector(".bottle-emoji").textContent = "💌";
+          bottleButton.querySelector("span:last-child").textContent =
+            "Your letter is waiting below ❤️";
+
+          loveLetter.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        });
+      }
+
+      if (memoriesButton && memories) {
+        memoriesButton.addEventListener("click", function () {
+          memories.hidden = false;
+          memoriesButton.textContent = "Our memories are here ❤️";
+          memoriesButton.disabled = true;
+
+          memories.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
+
