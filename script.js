@@ -243,31 +243,30 @@ const portraitGallery =
 
 const memories = [
   {
-    image: 'images/beba-cover.jpg',
+    image: 'beba cover.jpg',
     caption: 'My favorite person ❤️'
   },
   {
-    image: 'images/memory1.jpg',
+    image: 'childhood1.jpg',
     caption: 'A little moment, a big smile'
   },
   {
-    image: 'images/memory2.jpg',
+    image: 'childhood2.jpg',
     caption: 'My handsome birthday boy'
   },
   {
-    image: 'images/memory3.jpg',
+    image: 'selfie1.jpg',
     caption: 'Forever my favorite'
   },
   {
-    image: 'images/memory4.jpg',
+    image: 'us1.jpg',
     caption: 'One of a million reasons to smile'
   },
   {
-    image: 'images/memory5.jpg',
+    image: 'us2.jpg',
     caption: 'Just Beba ✨'
   }
 ];
-
 memories.forEach(memory => {
   const frame = document.createElement('div');
   frame.className = 'portrait';
